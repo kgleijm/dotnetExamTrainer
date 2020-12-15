@@ -35,6 +35,9 @@ namespace dotnetExamTrainer.Migrations
                     b.Property<int>("RightAnswer")
                         .HasColumnType("integer");
 
+                    b.Property<string>("SubText")
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
 
                     b.ToTable("Questions");

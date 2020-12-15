@@ -5,7 +5,7 @@ with open("multiple_choice_all_questions2020.txt", "r") as file:
         i += 1
         try:
             questionAsDict = dict()
-            garbage, question, answers = rawQuestion.split('\n', 2)
+            garbage, question, rest = rawQuestion.split('\n', 2)
             Id, QuestionText = question.split(":", 1)
             Id = int("".join(filter(str.isdigit, Id)))
             QuestionText = QuestionText[1:]
@@ -13,9 +13,8 @@ with open("multiple_choice_all_questions2020.txt", "r") as file:
                 QuestionText = QuestionText[0:-1]
             # print("'" + str(Id) + "' '" + QuestionText + "'\n", answers)
             print("\n")
-
+            print(rest)
             
-            answer =
 
 
 

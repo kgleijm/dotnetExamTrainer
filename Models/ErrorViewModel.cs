@@ -42,6 +42,8 @@ namespace dotnetExamTrainer.Models
         [Key]
         public int Id { get; set; }
         public string QuestionText { get; set; }
+
+        public string SubText { get; set;}
         public string[] AnswerText { get; set; }
         public int RightAnswer { get; set; }
 
@@ -51,6 +53,11 @@ namespace dotnetExamTrainer.Models
             string outp = "\n";
             outp += "Id: " + Id + "\n";
             outp += "QuestionText: " + QuestionText + "\n";
+            if (!SubText.Equals(null))
+            {
+                outp += SubText + "\n";
+            }
+
             for (int i = 0; i < AnswerText.Length; i++)
             {
                 outp += "- " + AnswerText[i];
