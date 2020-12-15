@@ -16,13 +16,28 @@ namespace dotnetExamTrainer.Controllers
     [ApiController]
     public class AddQuestionController : ControllerBase
     {
-        private ExamTrainerContext _data = new ExamTrainerContext();
+        
         
         [HttpPost]
         public String PostToAddQuestion(Question question)
         {
             System.Diagnostics.Debug.WriteLine("PostToAddQuestion() called with:");
             System.Diagnostics.Debug.WriteLine(question.ToString());
+            
+            using(ExamTrainerContext db = new ExamTrainerContext())
+            {
+                if (!db.Questions.Select(q => q.Id).Contains(question.Id))
+                {
+                    db.Add(question);
+                    db.SaveChanges();
+                    return "Success\nAdded question: " + question.ToString() + " to database";
+                }
+                else
+                {
+                    return "Failed\nQuestion: " + question.ToString() + " already in database";
+                }
+            }
+            
             
             return "AddQuestion controller response";
         }
