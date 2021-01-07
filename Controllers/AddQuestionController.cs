@@ -17,7 +17,6 @@ namespace dotnetExamTrainer.Controllers
     public class AddQuestionController : ControllerBase
     {
         
-        
         [HttpPost]
         public String PostToAddQuestion(Question question)
         {
@@ -37,9 +36,6 @@ namespace dotnetExamTrainer.Controllers
                     return "Failed\nQuestion: " + question.ToString() + " already in database";
                 }
             }
-            
-            
-            return "AddQuestion controller response";
         }
     }
 }

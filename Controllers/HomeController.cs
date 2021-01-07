@@ -23,7 +23,7 @@ namespace dotnetExamTrainer.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult TakeExam()
         {
             return View();
         }
@@ -34,6 +34,8 @@ namespace dotnetExamTrainer.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
+    
+    
     
     
     

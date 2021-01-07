@@ -1,0 +1,32 @@
+﻿@using Microsoft.EntityFrameworkCore
+@model object
+
+@{
+    ViewBag.Title = "Taking exam";
+    Layout = "_Layout";
+}
+
+<div class="CenterDiv">
+    <h2>Exam:</h2>
+</div>
+
+@{
+    Random r = new Random();
+    ExamTrainerContext _data = new ExamTrainerContext();
+    List<Question> questions = _data.Questions.Select(x => x).ToList().OrderBy(x => r.Next()).ToList();
+    for (int i = 0; i < 10; i++)
+    {
+        <div class="QuestionDiv">
+            <p class="QuestionText" style="display:inline">@questions[i].QuestionText </p>
+            <p class="SubText" style="display:inline">@questions[i].SubText</p>
+            <div class="AnswerDiv">
+                @foreach (var ans in questions[i].AnswerText)
+                {
+                    <input type="radio" name="@i" value="@i">
+                    <label for="age1">@ans</label><br>
+                }
+            </div>
+        </div>
+    }
+}
+

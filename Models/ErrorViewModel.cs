@@ -18,6 +18,7 @@ namespace dotnetExamTrainer.Models
         public DbSet<Question> Questions { get; set;}
         public DbSet<TakenExam> TakenExams { get; set;}
 
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             String conString = ("User ID=postgres;" +
