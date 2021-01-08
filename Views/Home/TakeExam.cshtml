@@ -41,6 +41,7 @@
 
     function onSubmit(){
         
+        //turn answers to a list to be graded by the server
         var answerList = [];
         var answers = document.getElementsByClassName("AnswerDiv");
         for (var questionIndex = 0; questionIndex < answers.length; questionIndex++) {
@@ -60,13 +61,42 @@
                     answer["SelectedAns"] = parseInt(radioButton[i].value);
                 }
             }
-            
            console.log("Ans" + questionIndex.toString(), answer);
            answerList.push(answer);
         }
-        
         console.log("list: ", answerList);
         
+        //send list to te server for grading
+        $(function () {
+            var package = {"AnswerList" : answerList};
+            pack = JSON.stringify(package);
+            console.log("Sending data", pack);
+            $.ajax({
+                type: "POST",
+                data :JSON.stringify(pack),
+                url: "Grade",
+                contentType: "application/json",
+                dataType: 'json'
+            }).done(
+                function(response) {
+                  onSuccess(response)
+                }
+            );
+        });
+        
     } 
+    
+    function onSuccess(resp) {
+        console.log("Got data from server", resp);
+        for(a in resp.AnswerList){
+            
+            //var str = e["RightAnswer"];
+            console.log("Got a, ", a);
+        }
+        
+        //gradedAnswers = JSON.parse();
+        
+        
+    }
 
 </script>
