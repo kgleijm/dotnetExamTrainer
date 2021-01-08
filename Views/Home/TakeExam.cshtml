@@ -19,7 +19,7 @@
         <div class="QuestionDiv">
             <p class="QuestionText" style="display:inline">@questions[i].QuestionText </p>
             <p class="SubText" style="display:inline">@questions[i].SubText</p>
-            <div class="AnswerDiv">
+            <div id="Q @questions[i].Id" class="AnswerDiv">
                 @foreach (var ans in questions[i].AnswerText)
                 {
                     <input type="radio" name="@i" value="@i">
@@ -28,5 +28,9 @@
             </div>
         </div>
     }
+    
+    <button class="submitButton" id="SubmitButton">Submit</button>
+    
+    
 }
 
