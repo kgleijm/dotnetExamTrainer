@@ -14,23 +14,59 @@
     Random r = new Random();
     ExamTrainerContext _data = new ExamTrainerContext();
     List<Question> questions = _data.Questions.Select(x => x).ToList().OrderBy(x => r.Next()).ToList();
-    for (int i = 0; i < 10; i++)
+    for (int questionIndex = 0; questionIndex < 3; questionIndex++)
     {
+        var ansNum = 0;
+        
         <div class="QuestionDiv">
-            <p class="QuestionText" style="display:inline">@questions[i].QuestionText </p>
-            <p class="SubText" style="display:inline">@questions[i].SubText</p>
-            <div id="Q @questions[i].Id" class="AnswerDiv">
-                @foreach (var ans in questions[i].AnswerText)
+            <p class="QuestionText" style="display:inline">@questions[questionIndex].QuestionText </p>
+            <p class="SubText" style="display:inline">@questions[questionIndex].SubText</p>
+            <div Qnum="@questionIndex" Qid="Q @questions[questionIndex].Id" id=@("Q" + questionIndex) class="AnswerDiv">
+                @foreach (var ans in questions[questionIndex].AnswerText)
                 {
-                    <input type="radio" name="@i" value="@i">
-                    <label for="age1">@ans</label><br>
+                    <input type="radio" name=@("Q" + questionIndex) value="@ansNum">
+                    <label for="@questionIndex">@ans</label><br>
+                    ansNum++;
                 }
             </div>
         </div>
     }
     
-    <button class="submitButton" id="SubmitButton">Submit</button>
+    <button class="submitButton" id="SubmitButton" onclick="onSubmit()">Submit</button>
     
     
 }
 
+<script>
+
+    function onSubmit(){
+        
+        var answerList = [];
+        var answers = document.getElementsByClassName("AnswerDiv");
+        for (var questionIndex = 0; questionIndex < answers.length; questionIndex++) {
+            //static values
+            var answer = {};
+            answer["Qnum"] = answers[questionIndex].getAttribute("Qnum");
+            answer["Qid"] = answers[questionIndex].getAttribute("Qid");
+           
+            //dynamic value(of radio button)
+            var span = document.getElementById(("Q" + questionIndex.toString()));
+            var radioButton = span.getElementsByTagName("input");
+            answer["SelectedAns"] = -1;
+            answer["RightAnswer"] = -1;
+            for (var i = 0; i < radioButton.length; ++i) {
+                if (radioButton[i].checked) {
+                    console.log("Value:" + radioButton[i].value);
+                    answer["SelectedAns"] = parseInt(radioButton[i].value);
+                }
+            }
+            
+           console.log("Ans" + questionIndex.toString(), answer);
+           answerList.push(answer);
+        }
+        
+        console.log("list: ", answerList);
+        
+    } 
+
+</script>
