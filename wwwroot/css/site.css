@@ -16,6 +16,24 @@
   margin: 10px;
 }
 
+.QuestionDivR{
+  background: #C5D86D;
+  width: 100%;
+  height: auto; 
+  border-radius: 30px;
+  padding: 20px;
+  margin: 10px;
+}
+
+.QuestionDivW{
+  background: #F06449;
+  width: 100%;
+  height: auto;
+  border-radius: 30px;
+  padding: 20px;
+  margin: 10px;
+}
+
 .AnswerDiv{
   background: #F2F3F7;
   width: 98%;

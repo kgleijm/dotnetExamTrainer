@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using dotnetExamTrainer.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -45,13 +46,26 @@ namespace dotnetExamTrainer.Controllers
         [HttpPost]
         public string Post([FromBody] JsonElement inp)
         {
+            ExamTrainerContext data = new ExamTrainerContext();
+            
             var str = inp.ToString();
             JObject json = JObject.Parse(str);
             var ansList = json["AnswerList"].ToList();
             for (int i = 0; i < ansList.Count; i++)
             {
-                ansList[i]["RightAnswer"] = 10;
-                Console.WriteLine(ansList[i]);
+                int incomingId = int.Parse(Regex.Match(ansList[i]["Qid"].ToString(), @"\d+").Value);
+                int rightAnswer = 404;
+                try
+                {
+                    rightAnswer = data.Questions.FirstOrDefault(q => q.Id == incomingId).RightAnswer;
+                }
+                catch
+                {
+                    
+                }
+                Console.Out.WriteLine("incomingId = {0}", incomingId);
+                ansList[i]["RightAnswer"] = rightAnswer;
+                Console.WriteLine("AnsList[i]" + ansList[i]);
             }
             json["AnswerList"] = JArray.FromObject(ansList);
             Console.WriteLine("OutList: " + json["AnswerList"]);

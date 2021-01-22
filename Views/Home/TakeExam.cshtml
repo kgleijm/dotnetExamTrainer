@@ -18,7 +18,7 @@
     {
         var ansNum = 0;
         
-        <div class="QuestionDiv">
+        <div class="QuestionDiv" id="Q @questions[questionIndex].Id">
             <p class="QuestionText" style="display:inline">@questions[questionIndex].QuestionText </p>
             <p class="SubText" style="display:inline">@questions[questionIndex].SubText</p>
             <div Qnum="@questionIndex" Qid="Q @questions[questionIndex].Id" id=@("Q" + questionIndex) class="AnswerDiv">
@@ -89,10 +89,22 @@
     function onSuccess(resp) {
         console.log("Got data from server", resp);
         //comment
-        console.log("Got right ans[0] from server", resp.AnswerList[0]["RightAnswer"]);
+        //console.log("Got right ans[0] from server", resp.AnswerList[0]["RightAnswer"]);
+        let i = 0;
         for(a in resp.AnswerList){
+            let chosenAns = resp.AnswerList[i]["SelectedAns"];
+            let correctAns = resp.AnswerList[i]["RightAnswer"];
+            let Qid = resp.AnswerList[i]["Qid"];
             
-            console.log("Got a, ", a);
+            if (correctAns == chosenAns){
+                document.getElementById(Qid).className= "QuestionDivR";
+                console.log("Rigth!")
+            }else{
+                document.getElementById(Qid).className= "QuestionDivW";
+                console.log("wrong!")
+            }
+            console.log("Got a, ", i, " ",correctAns);
+            i++;
         }
         
         
