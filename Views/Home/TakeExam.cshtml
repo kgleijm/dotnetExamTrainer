@@ -14,7 +14,7 @@
     Random r = new Random();
     ExamTrainerContext _data = new ExamTrainerContext();
     List<Question> questions = _data.Questions.Select(x => x).ToList().OrderBy(x => r.Next()).ToList();
-    for (int questionIndex = 0; questionIndex < 3; questionIndex++)
+    for (int questionIndex = 0; questionIndex < 20; questionIndex++)
     {
         var ansNum = 0;
         
@@ -25,7 +25,7 @@
                 @foreach (var ans in questions[questionIndex].AnswerText)
                 {
                     <input type="radio" name=@("Q" + questionIndex) value="@ansNum">
-                    <label for="@questionIndex">@ans</label><br>
+                    <label id="@("Q" + questionIndex + "A" + ansNum)" for="@questionIndex">@ans</label><br>
                     ansNum++;
                 }
             </div>
@@ -96,6 +96,7 @@
             let correctAns = resp.AnswerList[i]["RightAnswer"];
             let Qid = resp.AnswerList[i]["Qid"];
             
+            
             if (correctAns == chosenAns){
                 document.getElementById(Qid).className= "QuestionDivR";
                 console.log("Rigth!")
@@ -103,6 +104,11 @@
                 document.getElementById(Qid).className= "QuestionDivW";
                 console.log("wrong!")
             }
+            
+            let correctAnsId = "Q" + i.toString() + "A" + correctAns;
+            console.log("Searching for id: ", correctAnsId)
+            document.getElementById(correctAnsId).className= "AnsRight";
+            
             console.log("Got a, ", i, " ",correctAns);
             i++;
         }
